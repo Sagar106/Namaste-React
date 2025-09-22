@@ -93,3 +93,13 @@
 .search-box button{
     margin-left: 10px;
 }
+
+.user-card {
+    border: 2px solid rgb(197, 197, 197);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.user-card img {
+    width: 100px;
+}
