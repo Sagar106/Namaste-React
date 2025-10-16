@@ -1,4 +1,6 @@
-#heading{
+@import "tailwindcss";
+
+/* #heading{
     color: blue
 }
 
@@ -103,3 +105,11 @@
 .user-card img {
     width: 100px;
 }
+
+.online-status {
+    text-align: center;
+    padding: 2px;
+    background-color: rgb(232, 69, 60);
+    color: white;
+    margin-top: 5px;
+} */

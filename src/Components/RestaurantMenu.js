@@ -1,38 +1,27 @@
-import { useState, useEffect } from "react";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
 import Shimmer from "./Shimmer";
-import { MENU_API } from "../utils/constants";
 import { useParams } from "react-router";
 
 const RestaurantMenu = () => {
-    const [resInfo, setResInfo] = useState(null)
     const { resId } = useParams();
 
-    const fetchMenu = async () => {
-        const data = await fetch(MENU_API + resId)
-        const json = await data.json();
-
-        console.log(json)
-        setResInfo(json.data)
-    }
-
-    useEffect(() => {
-        fetchMenu()
-    }, [])
+    const resInfo = useRestaurantMenu(resId)
 
     if (resInfo === null) return <Shimmer />
 
-    const { name, cuisines, costForTwoMessage } = resInfo?.cards[2]?.card?.card?.info;
-    const { itemCards } = resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card
+    const { name, cuisines, costForTwoMessage } = resInfo.cards[2].card.card.info;
+    const { itemCards } = resInfo.cards[4].groupedCard.cardGroupMap.REGULAR.cards[1].card.card;
 
     return (
-        <div>
-            <h1>{name}</h1>
-            <p>{cuisines.join(",")} {costForTwoMessage}</p>
-            <h2>Menu</h2>
+        <div className="p-4">
+            <h1 className="text-3xl py-2">Generic Menu</h1>
+            <h1 className="text-2xl">Generic Name</h1>
+            <p className="text-xl">{cuisines.join(",")} {costForTwoMessage}</p>
+            <h2 className="py-2">Menu</h2>
             <ul>
                 {
                     itemCards.map(item => 
-                        <li key={item.card.info.id}>{item.card.info.name} - {"Rs."}{item.card.info.price / 100}</li>
+                        <li key={item.info.id}>{item.info.name} - {"Rs."}{item.info.price / 100}</li>
                     )
                 }
             </ul>
