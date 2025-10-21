@@ -3,17 +3,30 @@ import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { useEffect, useState } from "react";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import { withPromotedLabel } from "./RestaurantCard";
 
 const Body = () => {
     const [listOfRestaurants, setListOfRestaurants] = useState([])
     const [filteredRestaurants, setFilteredRestaurants] = useState([])
     const [searchText, setSearchText] = useState("")
+    const [isTopRated, setIsTopRated] = useState(false)
     const onlineStatus = useOnlineStatus()
+    const RestaurantCardPromoted = withPromotedLabel(RestaurantCard)
 
     const handleTopRatedButton = () => {
-        const filteredList = listOfRestaurants.filter((item) => item.info.avgRating > 4)
-        setListOfRestaurants(filteredList)
-    }
+        const newIsTopRated = !isTopRated;
+        setIsTopRated(newIsTopRated);
+
+        if (newIsTopRated) {
+            const filteredList = listOfRestaurants.filter(
+                (item) => item.info.avgRating > 4.5
+            );
+            setFilteredRestaurants(filteredList);
+        } else {
+            setFilteredRestaurants(listOfRestaurants);
+        }
+    };
+
 
     const fetchData = async () => {
         const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.951764396503366&lng=77.72220332175493&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
@@ -21,8 +34,8 @@ const Body = () => {
 
         console.log(json)
 
-        setListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-        setFilteredRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+        setListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+        setFilteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
     }
 
     const handleSearch = () => {
@@ -63,9 +76,11 @@ const Body = () => {
                         to={`/restaurants/${item.info.id}`}
                         key={item.info.id}
                     >
-                        <RestaurantCard
-                            resData={item}
-                        />
+                            {
+                                (item.info.avgRating > 4.5) ? 
+                                    <RestaurantCardPromoted resData={item} /> : 
+                                    <RestaurantCard resData={item} />
+                            }
                     </Link>
                     ))
                 }

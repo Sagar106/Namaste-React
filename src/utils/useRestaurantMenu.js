@@ -6,6 +6,8 @@ const useRestaurantMenu = (resId) => {
     const [resInfo, setResInfo] = useState(null)
 
     const fetchMenu = async () => {
+        // const data = fetch(MENU_API + resId + "&catalog_qa=undefined&submitAction=ENTER")
+        // console.log("menu api", data)
         setResInfo(mockResInfo)
     }
 
