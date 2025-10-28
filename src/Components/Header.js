@@ -1,9 +1,13 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { LOGO_URL } from "../utils/constants"
 import { Link } from "react-router"
+import { ThemeContext } from "../Context/ThemeContext"
 
 const Header = () => {
     const [btnName, setBtnName] = useState("Login")
+    const { theme, setTheme } = useContext(ThemeContext)
+
+    console.log("theme", theme)
 
     return (
         <div className="flex justify-between shadow-2xl bg-gray-50 shadow-gray-200 m-4 rounded-lg">
@@ -26,6 +30,19 @@ const Header = () => {
                         }}
                     >
                             {btnName}
+                    </button>
+                    <button 
+                        className={`px-5 py-1 mx-1 rounded-md cursor-pointer
+                            ${theme === "Light" ?
+                                "bg-gray-100 text-black": "bg-gray-700 text-white"
+                             }`}
+                        onClick={() => {
+                            theme === "Light" ?
+                            setTheme("Dark") :
+                            setTheme("Light")
+                        }}
+                    >
+                            {theme}
                     </button>
                 </ul>
             </div>

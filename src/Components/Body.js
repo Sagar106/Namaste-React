@@ -1,9 +1,10 @@
 import { Link } from "react-router";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { withPromotedLabel } from "./RestaurantCard";
+import { ThemeContext } from "../Context/ThemeContext";
 
 const Body = () => {
     const [listOfRestaurants, setListOfRestaurants] = useState([])
@@ -12,6 +13,7 @@ const Body = () => {
     const [isTopRated, setIsTopRated] = useState(false)
     const onlineStatus = useOnlineStatus()
     const RestaurantCardPromoted = withPromotedLabel(RestaurantCard)
+    const { theme } = useContext(ThemeContext);
 
     const handleTopRatedButton = () => {
         const newIsTopRated = !isTopRated;
@@ -59,7 +61,7 @@ const Body = () => {
     return listOfRestaurants.length === 0 ? (
         <Shimmer />
     ) : (
-        <div className="body">
+        <div className={`${theme === "Light" ? "bg-white" : "bg-gray-700"}`}>
             <div className="flex justify-between items-center">
                 <div className="p-3">
                     <input type="text" className="border-2 border-amber-500 rounded-md mx-2" value={searchText} onChange={(e) => setSearchText(e.target.value)} />

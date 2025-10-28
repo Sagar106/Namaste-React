@@ -7,6 +7,7 @@ import About from "./Components/About";
 import Error from "./Components/Error";
 import Contact from "./Components/Contact";
 import RestaurantMenu from "./Components/RestaurantMenu";
+import { ThemeProvider } from "./Context/ThemeContext";
 
 const Grocery = lazy(() => import("./Components/Grocery"))
 
@@ -20,10 +21,12 @@ const jsxHeading = <h1 id="heading">Hello World with JSX!</h1>;
 
 const AppLayout = () => {
     return (
-        <div className="app">
-            <Header />
-            <Outlet />
-        </div>
+        <ThemeProvider>
+            <div className="app">
+                <Header />
+                <Outlet />
+            </div>
+        </ThemeProvider>
     )
 }
 
