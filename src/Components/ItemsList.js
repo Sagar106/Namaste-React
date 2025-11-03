@@ -1,5 +1,13 @@
+import { useDispatch } from "react-redux"
+import { addItem } from "../store/cartSlice"
+
 const ItemsList = ({items}) => {
-  console.log(items)
+  const dispatch = useDispatch()
+  
+  const handleAddItem = (item) => {
+    dispatch(addItem(item))
+  }
+
   return (
     <div className="m-auto">
         {
@@ -11,7 +19,11 @@ const ItemsList = ({items}) => {
                         <p className="text-[12px] text-gray-600">{item.info.description}</p>
                     </div>
                     <div>
-                        <button className="bg-amber-600 text-amber-50 px-3 py-2 mx-2 rounded-md shadow-lg text-[14px] cursor-pointer">Add</button>
+                        <button 
+                            className="bg-amber-600 text-amber-50 px-3 py-2 mx-2 rounded-md shadow-lg text-[14px] cursor-pointer"
+                            onClick={() => handleAddItem(item)}
+                        >
+                            Add</button>
                     </div>
                 </div>
             ))
