@@ -10,8 +10,6 @@ const Header = () => {
     const { theme, setTheme } = useContext(ThemeContext)
     const cartItems = useSelector((store) => store.cart.items)
 
-    console.log("theme", theme)
-
     return (
         <div className="flex justify-between shadow-2xl bg-amber-100 shadow-gray-200 m-4 rounded-lg">
             <div className="logo-container">
@@ -24,9 +22,9 @@ const Header = () => {
                     <li className="px-4 hover:text-amber-500"><Link to="/contact">Contact</Link></li>
                     <li className="px-4 hover:text-amber-500"><Link to="/grocery">Grocery</Link></li>
                     <li className="px-4 hover:text-amber-500 mr-2">
-                        <Link to="/cart">
+                        <Link to="/cart" data-testid="cartLink">
                             <FaShoppingCart />
-                            <label className="bg-amber-600 text-amber-50 absolute z-10 p-1 mx-2 rounded-md shadow-lg">{cartItems.length}</label>
+                            <label className="bg-amber-600 text-amber-50 absolute z-10 p-1 mx-2 rounded-md shadow-lg" data-testid="cartLabel">{cartItems.length}</label>
                         </Link>
                     </li>
                     <button

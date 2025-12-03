@@ -195,6 +195,7 @@ const config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+  setupFilesAfterEnv: ["<rootDir>/src/setupTests.js"],
 };
 
 module.exports = config;
