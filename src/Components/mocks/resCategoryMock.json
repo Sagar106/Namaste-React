@@ -1,0 +1,25 @@
+{
+            "title": "Recommended",
+            "itemCards": [
+                {
+                    "info": {
+                        "id": "101",
+                        "name": "Paneer Butter Masala",
+                        "category": "Main Course",
+                        "description": "Soft paneer cubes simmered in buttery tomato gravy.",
+                        "price": 25000,
+                        "imageId": "paneer_butter_masala_img"
+                    }
+                },
+                {
+                    "info": {
+                        "id": "102",
+                        "name": "Veg Biryani",
+                        "category": "Rice",
+                        "description": "Fragrant basmati rice cooked with garden-fresh vegetables and spices.",
+                        "price": 22000,
+                        "imageId": "veg_biryani_img"
+                    }
+                }
+            ]
+}

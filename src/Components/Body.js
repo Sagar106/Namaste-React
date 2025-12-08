@@ -34,8 +34,6 @@ const Body = () => {
         const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.951764396503366&lng=77.72220332175493&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
         const json = await data?.json();
 
-        console.log(json)
-
         setListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
         setFilteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
     }
@@ -64,7 +62,7 @@ const Body = () => {
         <div className={`${theme === "Light" ? "bg-white" : "bg-gray-700"}`}>
             <div className="flex justify-between items-center">
                 <div className="p-3">
-                    <input type="text" className="border-2 border-amber-500 rounded-md mx-2" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
+                    <input data-testid="searchInput" type="text" className="border-2 border-amber-500 rounded-md mx-2" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
                     <button className="px-3 py-1 mx-2 bg-amber-400 rounded-md cursor-pointer hover:bg-amber-50 hover:text-amber-500" onClick={handleSearch}>Search</button>
                 </div>
                 <div className="">

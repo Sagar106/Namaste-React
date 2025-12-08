@@ -12,7 +12,7 @@ const ItemsList = ({items}) => {
     <div className="m-auto">
         {
             items.map((item) => (
-                <div key={item.info.id} className="text-left border-b-1 py-3 border-gray-300 flex justify-between">
+                <div key={item.info.id} className="text-left border-b-1 py-3 border-gray-300 flex justify-between" data-testid="itemList">
                     <div>
                         <h4 className="font-medium">{item.info.name}</h4>
                         <p className="text-[14px] pb-2">₹{item.info.price/100}</p>
