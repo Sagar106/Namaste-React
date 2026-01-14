@@ -1,43 +1,59 @@
-import { useState } from "react";
-import useRestaurantMenu from "../utils/useRestaurantMenu";
+import { useEffect, useState } from "react";
 import RestaurantCategory from "./RestaurantCategory";
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router";
 
+const API_BASE_URL = "https://namastedev.com/api/v1";
+
 const RestaurantMenu = () => {
-    const { resId } = useParams();
+  const { resId } = useParams();
+  const [showIndex, setShowIndex] = useState(null);
+  const [menuData, setMenuData] = useState(null);
 
-    const resInfo = useRestaurantMenu(resId)
+  useEffect(() => {
+    fetchResMenu();
+  }, []);
 
-    const [showIndex, setShowIndex] = useState(null)
+  const fetchResMenu = async () => {
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/listRestaurantMenu/${resId}`
+      );
+      const data = await response.json();
+      setMenuData(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    if (resInfo === null) return <Shimmer />
+  if (!menuData?.cards) return <Shimmer />;
 
-    const { name, cuisines, costForTwoMessage } = resInfo.cards[2].card.card.info;
-    const { itemCards } = resInfo.cards[4].groupedCard.cardGroupMap.REGULAR.cards[1].card.card;
+  const { name, cuisines, costForTwoMessage } =
+    menuData.cards[2].card.card.info;
 
-    const categories = resInfo.cards[4].groupedCard.cardGroupMap.REGULAR.cards.filter(
-        (c) => c.card?.card?.itemCards
-    )
+  const categories =
+    menuData.cards[4].groupedCard.cardGroupMap.REGULAR.cards.filter(
+      (c) => c.card?.card?.itemCards
+    );
 
-    console.log("categories", categories)
+  return (
+    <div className="p-4 text-center">
+      <h1 className="text-2xl pb-4">{name}</h1>
 
-    return (
-        <div className="p-4 text-center">
-            <h1 className="text-2xl pb-4">Generic Name</h1>
-            <p className="text pb-2 font-medium">{cuisines.join(", ")} {costForTwoMessage}</p>
-            {
-                categories.map((category, index) => (
-                        <RestaurantCategory 
-                            key={category.card.card.title} 
-                            data={category.card.card} 
-                            showItems={index === showIndex ? true : false}
-                            setShowIndex={() => setShowIndex(index === showIndex ? null : index)}
-                        />
-                ))
-            }
-        </div>
-    )
-}
+      <p className="pb-2 font-medium">
+        {cuisines.join(", ")} • {costForTwoMessage}
+      </p>
 
-export default RestaurantMenu
+      {categories.map((category, index) => (
+        <RestaurantCategory
+          key={category.card.card.title}
+          data={category.card.card}
+          showItems={index === showIndex}
+          setShowIndex={() => setShowIndex(index === showIndex ? null : index)}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default RestaurantMenu;

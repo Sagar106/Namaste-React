@@ -11,8 +11,6 @@ class UserClass extends React.Component {
                 avatar_url: "loading image..."
             }
         }
-
-        //console.log("Child constructor")
     }
 
     async componentDidMount() {
